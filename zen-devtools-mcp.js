@@ -107,8 +107,8 @@ async function ensureBrowser() {
 await ensureBrowser();
 
 const child = spawn(
-  "bunx",
-  ["@mozilla/firefox-devtools-mcp@latest", "--connectExisting", "--enableScript"],
+  "npx",
+  ["-y", "@mozilla/firefox-devtools-mcp@latest", "--connectExisting", "--enableScript"],
   { stdio: "inherit" },
 );
 child.on("exit", (code, signal) => process.exit(signal ? 1 : (code ?? 0)));

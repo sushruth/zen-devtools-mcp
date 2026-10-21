@@ -38,12 +38,12 @@ OpenCode example:
 ```jsonc
 "zen-devtools": {
   "type": "local",
-  "command": ["bunx", "github:sushruth/zen-devtools-mcp"],
+  "command": ["npx", "-y", "github:sushruth/zen-devtools-mcp"],
   "enabled": true
 },
 "firefox-devtools": {
   "type": "local",
-  "command": ["bunx", "github:sushruth/zen-devtools-mcp",
+  "command": ["npx", "-y", "github:sushruth/zen-devtools-mcp",
               "--app", "Firefox", "--process", "firefox", "--port", "2829"],
   "enabled": true
 }
@@ -53,9 +53,8 @@ Claude Code (`claude mcp add-json zen-devtools '<json>'` or `.mcp.json`):
 
 ```json
 "zen-devtools": {
-  "type": "stdio",
-  "command": "bunx",
-  "args": ["github:sushruth/zen-devtools-mcp"]
+  "command": "npx",
+  "args": ["-y", "github:sushruth/zen-devtools-mcp"]
 }
 ```
 
