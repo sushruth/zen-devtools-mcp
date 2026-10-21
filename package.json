@@ -1,0 +1,23 @@
+{
+  "name": "zen-devtools-mcp",
+  "version": "1.0.0",
+  "description": "Wraps @mozilla/firefox-devtools-mcp so it attaches to your running Zen Browser (or any Firefox) instance, auto-restarting the browser with Marionette enabled when needed.",
+  "bin": {
+    "zen-devtools-mcp": "./zen-devtools-mcp.js"
+  },
+  "files": [
+    "zen-devtools-mcp.js"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sushruth/zen-devtools-mcp.git"
+  },
+  "keywords": [
+    "mcp",
+    "zen-browser",
+    "firefox",
+    "devtools",
+    "model-context-protocol"
+  ]
+}
