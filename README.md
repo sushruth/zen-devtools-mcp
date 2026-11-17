@@ -58,6 +58,32 @@ Claude Code (`claude mcp add-json zen-devtools '<json>'` or `.mcp.json`):
 }
 ```
 
+## CLI
+
+Each agent session that loads the MCP server starts its own browser connection. The `zen-devtools` CLI shares one connection through a daemon. Element uids from `take_snapshot` stay valid across separate commands.
+
+Start the daemon in the foreground, here under [pueue](https://github.com/Nukesor/pueue):
+
+```
+pueue add --group services --label zen-devtools -- zen-devtools daemon
+```
+
+`zen-devtools daemon` accepts the same flags as `zen-devtools-mcp` (`--app`, `--process`, `--port`).
+
+Then:
+
+```
+zen-devtools status                 # is the daemon up
+zen-devtools tools                  # list tools
+zen-devtools take_snapshot --help   # usage for one tool
+zen-devtools navigate_page https://example.com
+zen-devtools take_snapshot
+zen-devtools click_by_uid e0
+zen-devtools evaluate_script '() => document.title'
+```
+
+Required arguments are positional, in schema order. Optional ones are `--name value`; a boolean can be a bare `--name`. Objects and arrays are passed as JSON. Screenshots are saved to a temp file and the path is printed. The socket is `~/.cache/zen-devtools/daemon.sock` (override with `ZEN_DEVTOOLS_SOCK`).
+
 ## Notes
 
 - Session restore preserves tabs across wrapper-triggered restarts.
