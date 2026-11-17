@@ -62,6 +62,14 @@ Claude Code (`claude mcp add-json zen-devtools '<json>'` or `.mcp.json`):
 
 Each agent session that loads the MCP server starts its own browser connection. The `zen-devtools` CLI shares one connection through a daemon. Element uids from `take_snapshot` stay valid across separate commands.
 
+Install:
+
+```
+npm i -g github:sushruth/zen-devtools-mcp
+```
+
+If you run it without installing (`npx -p github:sushruth/zen-devtools-mcp zen-devtools status`), it installs itself the first time it finds `zen-devtools` missing from PATH.
+
 Start the daemon in the foreground, here under [pueue](https://github.com/Nukesor/pueue):
 
 ```

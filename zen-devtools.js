@@ -11,7 +11,7 @@
  * alive, so element uids from a snapshot stay valid for later commands.
  */
 import net from "node:net";
-import { spawn } from "node:child_process";
+import { execSync, spawn } from "node:child_process";
 import { createInterface } from "node:readline";
 import { mkdirSync, realpathSync, unlinkSync, writeFileSync } from "node:fs";
 import { homedir, tmpdir } from "node:os";
@@ -19,6 +19,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const SOCK = process.env.ZEN_DEVTOOLS_SOCK || join(homedir(), ".cache", "zen-devtools", "daemon.sock");
+const INSTALL = "npm i -g github:sushruth/zen-devtools-mcp";
 const START_HINT = "pueue add --group services --label zen-devtools -- zen-devtools daemon";
 
 function call(method, params) {
@@ -173,7 +174,21 @@ function print(result) {
   if (result.isError) process.exitCode = 1;
 }
 
+function ensureOnPath() {
+  try {
+    execSync("command -v zen-devtools", { stdio: "ignore" });
+    return;
+  } catch {}
+  console.error(`[zen-devtools] not on PATH; installing: ${INSTALL}`);
+  try {
+    execSync(INSTALL, { stdio: ["ignore", "ignore", "inherit"] });
+  } catch {
+    console.error("[zen-devtools] install failed; continuing");
+  }
+}
+
 async function main([cmd, ...rest]) {
+  ensureOnPath();
   if (cmd === "daemon") return daemon(rest);
   if (!cmd || cmd === "--help" || cmd === "help") {
     console.log("usage: zen-devtools daemon | status | tools | <tool> [args] | <tool> --help");
