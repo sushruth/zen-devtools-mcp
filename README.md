@@ -70,18 +70,13 @@ npm i -g github:sushruth/zen-devtools-mcp
 
 If you run it without installing (`npx -p github:sushruth/zen-devtools-mcp zen-devtools status`), it installs itself the first time it finds `zen-devtools` missing from PATH.
 
-Start the daemon in the foreground, here under [pueue](https://github.com/Nukesor/pueue):
+The first command starts the daemon in the background, and it keeps running until `zen-devtools stop`. The daemon starts Zen with Marionette if needed. Only one daemon runs at a time, and it handles commands one after another.
 
-```
-pueue add --group services --label zen-devtools -- zen-devtools daemon
-```
-
-`zen-devtools daemon` accepts the same flags as `zen-devtools-mcp` (`--app`, `--process`, `--port`).
-
-Then:
+To start it with other flags (`--app`, `--process`, `--port`, as for `zen-devtools-mcp`), run `zen-devtools daemon <flags>` in the foreground before anything else.
 
 ```
 zen-devtools status                 # is the daemon up
+zen-devtools stop                   # stop it
 zen-devtools tools                  # list tools
 zen-devtools take_snapshot --help   # usage for one tool
 zen-devtools navigate_page https://example.com
@@ -90,7 +85,7 @@ zen-devtools click_by_uid e0
 zen-devtools evaluate_script '() => document.title'
 ```
 
-Required arguments are positional, in schema order. Optional ones are `--name value`; a boolean can be a bare `--name`. Objects and arrays are passed as JSON. Screenshots are saved to a temp file and the path is printed. The socket is `~/.cache/zen-devtools/daemon.sock` (override with `ZEN_DEVTOOLS_SOCK`).
+Required arguments are positional, in schema order. Optional ones are `--name value`; a boolean can be a bare `--name`. Objects and arrays are passed as JSON. Screenshots are saved to a temp file and the path is printed. The daemon keeps its pid, socket and log in `~/.zen-devtools/` (override with `ZEN_DEVTOOLS_DIR`).
 
 ## Notes
 
